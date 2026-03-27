@@ -5,6 +5,7 @@ colorFrom: blue
 colorTo: green
 sdk: docker
 pinned: false
+app_file: app\main.py
 app_port: 7860
 ---
 
