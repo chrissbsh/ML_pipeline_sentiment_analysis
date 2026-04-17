@@ -9,8 +9,8 @@ app = FastAPI(title="Sentiment Analysis API for Trading")
 
 # 2. Chargement du modèle (Une seule fois au démarrage)
 MODEL_NAME = "ProsusAI/finbert"
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME)
+tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, local_files_only=True)
+model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME, local_files_only=True)
 
 # 3. Notre filtre géopolitique (Regex)
 GEOPOLITICS_KEYWORDS = ["war", "tariffs", "sanctions", "conflict", "election"]
