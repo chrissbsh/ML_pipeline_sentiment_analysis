@@ -1,17 +1,14 @@
-# 1. Utiliser une image Python légère
-FROM python:3.12-slim
+FROM python:3.9
 
-# 2. Définir le dossier de travail
-WORKDIR /code
+RUN useradd -m -u 1000 user
+USER user
+ENV PATH="/home/user/.local/bin:$PATH"
 
-# 3. Copier les fichiers de dépendances
-COPY requirements.txt .
+WORKDIR /app
 
-# 4. Installer les libs (PyTorch CPU pour économiser de la RAM au début)
-RUN pip install --no-cache-dir -r requirements.txt
+COPY --chown=user ./requirements.txt requirements.txt
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
-# 5. Copier le reste du code
-COPY . .
+COPY --chown=user . /app
 
-# 6. Lancer FastAPI avec Uvicorn
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "7860"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "7860"]
